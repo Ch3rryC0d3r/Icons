@@ -8,7 +8,7 @@ Icons introduces small images that are placed next to text in descriptions of ca
 * **Required Parameters**:
   * `key`
 * **Optional Parameters** *(defaults)*:
-  * `atlas = Joker, pos = {x = 0, y = 0}`
+  * `atlas = "Joker", pos = {x = 0, y = 0}`
   * `targets = {self.key}`
     * `targets` is what text it should search for when adding an icon
     * Must be a table
