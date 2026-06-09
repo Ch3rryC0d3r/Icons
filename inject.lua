@@ -1,0 +1,2 @@
+sendDebugMessage("INJECT LOADED!", "ICONS")
+
