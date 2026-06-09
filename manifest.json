@@ -2,7 +2,7 @@
 	"id": "Icons",
 	"name": "Icons",
 	"display_name": "Icons",
-	"author": ["Breuhh"],
+	"author": ["Breuhh", "Jogla"],
 	"description": "A qol mod for Balatro that adds icons to descriptions!",
 	"prefix": "ico",
 	"main_file": "main.lua",
