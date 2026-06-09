@@ -15,8 +15,8 @@ match_indent = false
 payload = '''
     local _t, _t_table = nil
     local function save_string()
-        parsed_line[#parsed_line+1] = {strings = str_parts, control = control or {}}
-        str_parts = {}
+        parsed_line[#parsed_line+1] = {strings = str_parts, control = copy_table(control) or {}}
+        str_parts, str_it = {}, 1
     end
 '''
 
@@ -30,5 +30,24 @@ pattern = '''
 position = 'before'
 match_indent = false
 payload = '''
-    elseif not _c and char == ' ' and not _s_gather then save_string(); str_parts = {' '}; save_string()
+    elseif not _c and char == ' ' then
+    save_string()
+    local old_bg = control['X']
+    control['X'] = nil
+    str_parts = {' '}
+    save_string()
+    control['X'] = old_bg
+'''
+
+# force function
+[[patches]]
+[patches.pattern]
+target = 'functions/misc_functions.lua'
+pattern = '''
+if str_parts[1] then parsed_line[#parsed_line+1] = {strings = str_parts, control = control or {}} end
+'''
+position = 'at'
+match_indent = false
+payload = '''
+    if str_parts[1] then save_string() end
 '''

@@ -1,5 +1,5 @@
 Icons = SMODS.current_mod
-function Icons.log(txt); print("ICONS: ", txt) end
+function Icons.log(txt) print("ICONS: ", txt) end
 
 
 Icons.Icons= {
