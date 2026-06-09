@@ -2,6 +2,7 @@ Icons.testjk = SMODS.Joker{
     key = 'test',
     loc_vars = function (self, info_queue, card)
         return {vars = {
+            22,
             elements = {
                 { n=G.UIT.C, config = { align="cm" }, nodes = { 
                 { n=G.UIT.O, config= { object =
@@ -14,12 +15,17 @@ Icons.testjk = SMODS.Joker{
     loc_txt = {
         name = 'test',
         text = {
-            "{C:green}hi{element:1}jimbo"
+            "{C:green}Mult #1# {element:1}jimbo"
         }
     }
 }
 
 Icons.Icon{
-    key = 'test',
-    targets = {"Mult", "Chips", "Joker"}
+    key = 'mult',
+    targets = {"Mult"}
+}
+Icons.Icon{
+    key = 'chps',
+    targets = {"Chips"},
+    pos = {x = 1, y = 0}
 }

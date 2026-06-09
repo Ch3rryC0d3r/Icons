@@ -1,0 +1,113 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 10
+
+# parse_string prep
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = "if card == nil and card_type then"
+position = 'before'
+match_indent = false
+payload = '''
+    local function prep_specific_vars ()
+        if SMODS then
+            specific_vars = specific_vars or {}
+            specific_vars.elements = {}
+            for i=1, Icons.get_needed_icons(_c) do
+                table.insert(
+                    specific_vars.elements,
+                    { n=G.UIT.C, config = { align="cm" }, nodes = { 
+                        { n=G.UIT.O, config= { object =
+                            SMODS.create_sprite(0, 0, .3, .3, "Joker", {x = 0, y = 0})
+                        } }
+                    } }
+                )
+            end
+        end
+    end
+    local function transfer_loc_vars ()
+        specific_vars = _c.vars or loc_vars
+        prep_specific_vars()
+        _c.vars = specific_vars
+        loc_vars = specific_vars
+    end
+'''
+
+# parse_string prep
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = "localize{type = 'other', key = _c.key, nodes = desc_nodes, vars = specific_vars or _c.vars}"
+position = 'before'
+match_indent = false
+payload = '''
+        prep_specific_vars()
+'''
+
+# Jimba
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = "localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = specific_vars or {}}"
+position = 'before'
+match_indent = false
+payload = '''
+        prep_specific_vars()
+'''
+
+# tags
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = "localize{type = 'descriptions', key = _c.key, set = 'Tag', nodes = desc_nodes, vars = specific_vars or {}}"
+position = 'before'
+match_indent = false
+payload = '''
+        prep_specific_vars()
+'''
+
+# voucher
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = "localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = _c.vars or loc_vars}"
+position = 'before'
+match_indent = false
+payload = '''
+        transfer_loc_vars()
+'''
+
+# voucher
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = "localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = _c.vars or loc_vars}"
+position = 'before'
+match_indent = false
+payload = '''
+        transfer_loc_vars()
+'''
+
+
+
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = "localize{type = 'other', key = 'playing_card', set = 'Other', nodes = full_UI_table.name, vars = {localize(specific_vars.value, 'ranks'), localize(specific_vars.suit, 'suits_plural'), colours = {specific_vars.colour}}}"
+position = 'before'
+match_indent = false
+payload = '''
+        prep_specific_vars()
+'''
+
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = "if _c.rarity and _c.rarity == 4 and specific_vars and not specific_vars.not_hidden then "
+position = 'before'
+match_indent = false
+payload = '''
+        prep_specific_vars()
+'''

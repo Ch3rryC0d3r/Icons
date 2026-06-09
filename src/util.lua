@@ -33,3 +33,13 @@ function Icons.get_starting_index(obj)
         return 1
     end
 end
+
+function Icons.get_needed_icons(obj)
+    local c = 1
+    for _,line in ipairs(G.localization.descriptions[obj.set][obj.key].text_parsed) do
+        for _,segment in ipairs(line) do
+            if segment.control and segment.control.element then c = c + 1 end
+        end
+    end
+    return c - Icons.get_starting_index(obj)
+end
