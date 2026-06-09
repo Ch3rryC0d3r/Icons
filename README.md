@@ -1,5 +1,5 @@
 # Icons
-### A mod made by Breuhh, Jogla and Aura2257
+### A mod made by Breuhh, Jogla and Aura2247
 
 Icons introduces small images that are placed next to text in descriptions of cards. Like how when they mention Characters in Super Mario games. 
 
