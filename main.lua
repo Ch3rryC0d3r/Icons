@@ -1,49 +1,47 @@
 Icons = SMODS.current_mod
+function Icons.log(txt); print("ICONS: ", txt) end
 
-Icons.HasAdded = false
-Icons.IconNames = {
-    "tarot"
+
+Icons.Icons= {
+    tarot = {
+        key = "tarot",
+        target = {"tarot"},
+        atlas = "I cant the atlas name",
+        pos = "nor the pos"
+    }
 }
 
-function Icons.splitWords(str) -- splits lines into table of words
-    local words = {}
-    for word in str:gmatch("%S+") do
-        table.insert(words, word)
+function Icons.AddIcon(args)
+    if not args.key then
+        Icons.log("Missing key!")
+        Icons.log("A key value is missing")
+        Icons.log("from Icons.AddIcon somewhere!")
+        return
     end
-    return words
-end
 
-function Icons.parse(val)
-    if type(val) == "table" then
-        for i,v in pairs(val) do
-            val[i] = Icons.parse(v)
-        end
-        return val
-    elseif type(val) == "string" then
-        local words = Icons.splitWords(val)
-        local line = ""
-        for i,v in pairs(words) do
-            for ii,vv in pairs(Icons.IconNames) do
-                if string.lower(v) == vv then
-                    line = line .. "(ICON:" .. vv .. ") "
-                end
-            end
-            line = line .. v .. " "
-        end
-
-        line = line:sub(1, -2)
-        return line
+    if not args.atlas then
+        Icons.log("Missing atlas!")
+        Icons.log("An atlas value is missing")
+        Icons.log("from Icons.AddIcon somewhere!")
+        return
     end
-    return val
-end
 
-local old_init_localization = init_localization
-function init_localization()
-    if not Icons.HasAdded then G.localization = Icons.parse(G.localization); Icons.HasAdded = true end
-    old_init_localization()
-end
+    if not args.pos then
+        args.pos = {x = 0, y = 0}
+    end
 
-init_localization()
+
+
+    if not args.target then
+        args.target = {args.key}
+    end
+
+    --[[if not args.case_sensitive then
+        for i,v in pairs(args.target) do
+            args.target[i] = string.lower(v)
+        end
+    end]] --Probably remove this idk, just makes target lowercase if args.case_sensitive is false
+end
 
 -- misc_functions.lua has localize(), init_localization(), loc_parse_string()
 -- game.lua has G.localization line 993
