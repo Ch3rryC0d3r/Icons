@@ -1,2 +1,0 @@
-sendDebugMessage("INJECT LOADED!", "ICONS")
-
