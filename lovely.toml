@@ -1,0 +1,34 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = -999999999
+
+# parse_string prep
+[[patches]]
+[patches.pattern]
+target = 'functions/misc_functions.lua'
+pattern = '''
+      local str_parts, str_it = {}, 1
+'''
+position = 'after'
+match_indent = false
+payload = '''
+    local _t, _t_table = nil
+    local function save_string()
+        parsed_line[#parsed_line+1] = {strings = str_parts, control = control or {}}
+        str_parts = {}
+    end
+'''
+
+# line separator
+[[patches]]
+[patches.pattern]
+target = 'functions/misc_functions.lua'
+pattern = '''
+      elseif not _c and char ~= '#' and not _s_gather then str_parts[str_it] = (str_parts[str_it] or '')..(control['X'] and char:gsub("%s+", "") or char)
+'''
+position = 'before'
+match_indent = false
+payload = '''
+    elseif not _c and char == ' ' and not _s_gather then save_string(); str_parts = {' '}; save_string()
+'''
