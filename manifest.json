@@ -1,0 +1,13 @@
+{
+	"id": "Icons",
+	"name": "Icons",
+	"display_name": "Icons",
+	"author": ["Breuhh"],
+	"description": "A qol mod for Balatro that adds icons to descriptions!",
+	"prefix": "ico",
+	"main_file": "main.lua",
+	"priority": 100000,
+	"badge_colour": "6aa6a8",
+	"version": "1.0.0",
+	"dependencies": ["Steamodded (>=1.0.0~BETA-1531zeebee)"]
+}
