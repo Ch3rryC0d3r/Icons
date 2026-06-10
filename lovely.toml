@@ -13,9 +13,10 @@ pattern = '''
 position = 'after'
 match_indent = false
 payload = '''
-    local _t, _t_table = nil
-    local function save_string()
-        parsed_line[#parsed_line+1] = {strings = str_parts, control = copy_table(control) or {}}
+    local function save_string(override)
+        if override or str_parts[1] and str_parts[1] ~= ' ' then
+            parsed_line[#parsed_line+1] = {strings = str_parts, control = copy_table(control) or {}}
+        end
         str_parts, str_it = {}, 1
     end
 '''
@@ -31,11 +32,11 @@ position = 'before'
 match_indent = false
 payload = '''
     elseif not _c and char == ' ' then
-    save_string()
+    save_string(false)
     local old_bg = control['X']
     control['X'] = nil
     str_parts = {' '}
-    save_string()
+    save_string(true)
     control['X'] = old_bg
 '''
 
@@ -49,7 +50,7 @@ if str_parts[1] then parsed_line[#parsed_line+1] = {strings = str_parts, control
 position = 'at'
 match_indent = false
 payload = '''
-    if str_parts[1] then save_string() end
+    if str_parts[1] then save_string(false) end
 '''
 
 # loc acc
