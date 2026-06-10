@@ -20,12 +20,22 @@ Icons.testjk = SMODS.Joker{
     }
 }
 
+SMODS.Atlas{
+    key = 'icons',
+    path = 'icons.png',
+    px = 18,
+    py = 18
+}
+
 Icons.Icon{
     key = 'mult',
-    targets = {"Mult"}
+    atlas = 'icons',
+    pos = {x = 2, y = 3},
+    targets = {"Mult"},
 }
 Icons.Icon{
     key = 'chps',
+    atlas = 'icons',
+    pos = {x = 0, y = 5},
     targets = {"Chips"},
-    pos = {x = 1, y = 0}
 }

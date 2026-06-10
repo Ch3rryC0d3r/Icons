@@ -15,12 +15,12 @@ payload = '''
         if SMODS then
             specific_vars = specific_vars or {}
             specific_vars.elements = {}
-            for i=1, Icons.get_needed_icons(_c) do
+            for _,v in ipairs(Icons.get_needed_icons(_c)) do
                 table.insert(
                     specific_vars.elements,
                     { n=G.UIT.C, config = { align="cm" }, nodes = { 
                         { n=G.UIT.O, config= { object =
-                            SMODS.create_sprite(0, 0, .3, .3, "Joker", {x = 0, y = 0})
+                            SMODS.create_sprite(0, 0, 0.3, 0.3, v.atlas ~= false and v.atlas or 'ico_icons', v.pos or {x = 0, y = 0})
                         } }
                     } }
                 )

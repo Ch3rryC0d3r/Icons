@@ -26,20 +26,42 @@ Icons.Icon = SMODS.GameObject:extend {
 -- game.lua has G.localization line 993
 
 function Icons.get_starting_index(obj)
-    if obj.loc_vars then
-        local ret = obj.loc_vars(obj,{},obj)
-        return ret.vars and ret.vars.elements and #ret.vars.elements
-    else
-        return 1
+    local c = 1
+    for _,line in ipairs(G.localization.descriptions[obj.set][obj.key].text_parsed) do
+        for i=1,#line do
+            if line[i].control and line[i].control.element then
+                c = c + 1
+            end
+        end
     end
+    return c
 end
 
 function Icons.get_needed_icons(obj)
-    local c = 1
+    local c = {}
     for _,line in ipairs(G.localization.descriptions[obj.set][obj.key].text_parsed) do
-        for _,segment in ipairs(line) do
-            if segment.control and segment.control.element then c = c + 1 end
+        for i=1,#line do
+            if line[i].control and line[i].control.element then
+                table.insert(c,Icons.get_icon_data(line[i+1].strings[1]))
+            end
         end
     end
-    return c - Icons.get_starting_index(obj)
+    return c
+end
+
+function Icons.get_icon_data(str)
+    for i, v in pairs(Icons.Icons) do
+        for ii,vv in ipairs(v.targets) do
+            if str == vv then
+                return {
+                    atlas = v.atlas,
+                    pos = v.pos
+                }
+            end
+        end
+    end
+    return {
+        atlas = 'Joker',
+        pos = {x = 0, y = 0}
+    }
 end
