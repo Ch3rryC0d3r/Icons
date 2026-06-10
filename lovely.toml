@@ -59,12 +59,26 @@ payload = '''
 [patches.pattern]
 target = 'functions/misc_functions.lua'
 pattern = '''
+for _, line in ipairs(center.text) do
+'''
+position = 'before'
+match_indent = false
+payload = '''
+    G.Icons_temp_loc_acc = 1
+    G.Icons_temp_loc_process = true
+'''
+
+[[patches]]
+[patches.pattern]
+target = 'functions/misc_functions.lua'
+pattern = '''
 center.name_parsed = {}
 '''
 position = 'after'
 match_indent = false
 payload = '''
     G.Icons_temp_loc_acc = nil
+    G.Icons_temp_loc_process = nil
 '''
 
 # name

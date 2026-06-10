@@ -1,6 +1,7 @@
 local ref = loc_parse_string
 function loc_parse_string(...)
     local parsed_line = ref(...) or {}
+    if not G.Icons_temp_loc_process then print("skip!") return parsed_line end
     G.Icons_temp_loc_acc = G.Icons_temp_loc_acc or 1
     for i=1, #parsed_line do
         if parsed_line[i].control and parsed_line[i].control.element then G.Icons_temp_loc_acc = G.Icons_temp_loc_acc + 1 end
@@ -25,6 +26,7 @@ local ref = init_localization
 function init_localization(...)
     local ret = ref(...)
     G.Icons_temp_loc_acc = nil
+    G.Icons_temp_loc_skip = nil
     return ret
 end
 
@@ -39,6 +41,17 @@ function localize(args,misc_cat,...)
                 { n=G.UIT.C, config = { align="cm" }, nodes = { 
                     { n=G.UIT.O, config= { object =
                         SMODS.create_sprite(0, 0, 0.3, 0.3, v.atlas ~= false and v.atlas or 'ico_icons', v.pos or {x = 0, y = 0})
+                    } }
+                } }
+            )
+        end
+        -- temporary failsafe
+        for i = 1, 20 do
+            table.insert(
+                args.vars.elements,
+                { n=G.UIT.C, config = { align="cm" }, nodes = { 
+                    { n=G.UIT.O, config= { object =
+                        SMODS.create_sprite(0, 0, 0.3, 0.3, 'ico_icons', {x = 0, y = 0})
                     } }
                 } }
             )

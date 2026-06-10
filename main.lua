@@ -7,6 +7,7 @@ local mod_contents = {
 	{path = 'util', deps = {}},
 	{path = 'overrides', deps = {}},
 	{path = 'test', deps = {}},
+	{path = 'vanilla_definitions', deps = {}},
 }
 
 for k, v in ipairs(mod_contents) do -- Load this mod's files
