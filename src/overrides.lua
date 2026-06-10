@@ -2,17 +2,21 @@ local ref = loc_parse_string
 function loc_parse_string(...)
     local parsed_line = ref(...) or {}
     G.Icons_temp_loc_acc = G.Icons_temp_loc_acc or 1
-    for i=#parsed_line, 1, -1 do
+    for i=1, #parsed_line do
         if parsed_line[i].control and parsed_line[i].control.element then G.Icons_temp_loc_acc = G.Icons_temp_loc_acc + 1 end
+    end
+    local i = 1
+    while i <= #parsed_line do
         for _, v in pairs(Icons.Icons) do
             for _, vv in ipairs(v.targets) do
                 if parsed_line[i] and parsed_line[i].strings[1] == vv then
                     table.insert(parsed_line,i,{strings = {}, control = {element = tostring(G.Icons_temp_loc_acc)}})
-                    i = i - 1
+                    i = i + 1
                     G.Icons_temp_loc_acc = G.Icons_temp_loc_acc + 1
                 end
             end
         end
+        i = i + 1
     end
     return parsed_line
 end
@@ -21,6 +25,7 @@ local ref = init_localization
 function init_localization(...)
     local ret = ref(...)
     G.Icons_temp_loc_acc = nil
+    return ret
 end
 
 local ref = localize

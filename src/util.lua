@@ -42,7 +42,7 @@ function Icons.get_needed_icons(obj)
     local c = {}
     for _,line in ipairs(G.localization.descriptions[obj.set][obj.key].text_parsed) do
         for i=1,#line do
-            if line[i].control and line[i].control.element then
+            if line[i].control and line[i].control.element and line[i+1] then
                 table.insert(c,Icons.get_icon_data(line[i+1].strings[1]))
             end
         end

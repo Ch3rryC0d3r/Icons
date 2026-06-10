@@ -15,7 +15,8 @@ Icons.testjk = SMODS.Joker{
     loc_txt = {
         name = 'test',
         text = {
-            "{C:green}Mult #1# {element:1}jimbo"
+            "{C:green} Mult #1# {element:1}jimbo",
+            "Chips Mult"
         }
     }
 }
