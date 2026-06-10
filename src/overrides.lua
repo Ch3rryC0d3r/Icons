@@ -1,8 +1,8 @@
 local ref = loc_parse_string
 function loc_parse_string(...)
     local parsed_line = ref(...) or {}
+    local c = 1
     for i=#parsed_line, 1, -1 do
-        local c = 1
         if parsed_line[i].control and parsed_line[i].control.element then c = c + 1 end
         for _, v in pairs(Icons.Icons) do
             for _, vv in ipairs(v.targets) do
