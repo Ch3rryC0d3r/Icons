@@ -52,4 +52,29 @@ payload = '''
     if str_parts[1] then save_string() end
 '''
 
-# add element
+# loc acc
+# desc
+[[patches]]
+[patches.pattern]
+target = 'functions/misc_functions.lua'
+pattern = '''
+center.name_parsed = {}
+'''
+position = 'after'
+match_indent = false
+payload = '''
+    G.Icons_temp_loc_acc = nil
+'''
+
+# name
+[[patches]]
+[patches.pattern]
+target = 'functions/misc_functions.lua'
+pattern = '''
+if center.unlock then
+'''
+position = 'after'
+match_indent = false
+payload = '''
+    G.Icons_temp_loc_acc = nil
+'''
