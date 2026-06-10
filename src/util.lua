@@ -38,6 +38,7 @@ function Icons.get_starting_index(obj)
 end
 
 function Icons.get_needed_icons(obj)
+    if not obj then return {} end
     local c = {}
     for _,line in ipairs(G.localization.descriptions[obj.set][obj.key].text_parsed) do
         for i=1,#line do

@@ -16,3 +16,23 @@ function loc_parse_string(...)
     end
     return parsed_line
 end
+
+local ref = localize
+function localize(args,misc_cat,...)
+    if args and type(args) == 'table' then
+        args.vars = args.vars or {}
+        args.vars.elements = args.vars.elements or {}
+        for _,v in ipairs(Icons.get_needed_icons(G.P_CENTERS[args.key])) do
+                table.insert(
+                args.vars.elements,
+                { n=G.UIT.C, config = { align="cm" }, nodes = { 
+                    { n=G.UIT.O, config= { object =
+                        SMODS.create_sprite(0, 0, 0.3, 0.3, v.atlas ~= false and v.atlas or 'ico_icons', v.pos or {x = 0, y = 0})
+                    } }
+                } }
+            )
+        end
+    end
+    local ret = ref(args,misc_cat,...)
+    return ret
+end
