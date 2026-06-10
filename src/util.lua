@@ -39,6 +39,7 @@ end
 
 function Icons.get_needed_icons(obj)
     if not obj then return {} end
+    if not G or not G.localization or not G.localization.descriptions or not G.localization.descriptions[obj.set] or not G.localization.descriptions[obj.set][obj.key] or not G.localization.descriptions[obj.set][obj.key].text_parsed then return {} end
     local c = {}
     for _,line in ipairs(G.localization.descriptions[obj.set][obj.key].text_parsed) do
         for i=1,#line do
