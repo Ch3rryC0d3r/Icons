@@ -35,20 +35,17 @@ function localize(args,misc_cat,...)
     if args and type(args) == 'table' then
         args.vars = args.vars or {}
         args.vars.elements = args.vars.elements or {}
-        local tables = {'P_CENTERS','P_SEALS'}
-        for _,t in pairs(tables) do
-            for _,v in ipairs(Icons.get_needed_icons(G[t][args.key])) do
-                    table.insert(
-                    args.vars.elements,
-                    { n=G.UIT.C, config = { align="cm" }, nodes = { 
-                        { n=G.UIT.O, config= { object =
-                            SMODS.create_sprite(0, 0, 0.3, 0.3, v.atlas or 'ico_icons', v.pos or {x = 0, y = 0})
-                        } }
+        for _,v in ipairs(Icons.get_needed_icons(args)) do
+                table.insert(
+                args.vars.elements,
+                { n=G.UIT.C, config = { align="cm" }, nodes = { 
+                    { n=G.UIT.O, config= { object =
+                        SMODS.create_sprite(0, 0, 0.3, 0.3, v.atlas or 'ico_icons', v.pos or {x = 0, y = 0})
                     } }
-                )
-            end
+                } }
+            )
         end
-        
+        if false then
         -- temporary failsafe
         for i = 1, 20 do
             table.insert(
@@ -59,6 +56,7 @@ function localize(args,misc_cat,...)
                     } }
                 } }
             )
+        end
         end
     end
     local ret = ref(args,misc_cat,...)

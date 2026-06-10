@@ -37,15 +37,26 @@ function Icons.get_starting_index(obj)
     return c
 end
 
-function Icons.get_needed_icons(obj)
-    if not obj then return {} end
-    if not G or not G.localization or not G.localization.descriptions or not G.localization.descriptions[obj.set] or not G.localization.descriptions[obj.set][obj.key] or not G.localization.descriptions[obj.set][obj.key].text_parsed then return {} end
+function Icons.get_needed_icons(args)
+    args.set = args.set or 'Other'
+    if not args or not args.set or not args.key then return {} end
+    if not G.localization.descriptions[args.set][args.key] then return {} end
     local c = {}
-    for _,line in ipairs(G.localization.descriptions[obj.set][obj.key].text_parsed) do
+    for _,line in ipairs(G.localization.descriptions[args.set][args.key].text_parsed) do
         for i=1,#line do
             if line[i].control and line[i].control.element and line[i+1] then
                 table.insert(c,Icons.get_icon_data(line[i+1].strings[1]))
             end
+        end
+    end
+    return c
+end
+
+function Icons.get_element_count(t)
+    local c = 0
+    for i, v in ipairs(t) do
+        for ii,vv in ipairs(v) do
+            if vv.control and vv.control.element then c = c + 1 end
         end
     end
     return c
