@@ -1,7 +1,7 @@
 local ref = loc_parse_string
 function loc_parse_string(...)
     local parsed_line = ref(...) or {}
-    if not G.Icons_temp_loc_process then print("skip!") return parsed_line end
+    if not G.Icons_temp_loc_process then return parsed_line end
     G.Icons_temp_loc_acc = G.Icons_temp_loc_acc or 1
     for i=1, #parsed_line do
         if parsed_line[i].control and parsed_line[i].control.element then G.Icons_temp_loc_acc = G.Icons_temp_loc_acc + 1 end
@@ -35,16 +35,20 @@ function localize(args,misc_cat,...)
     if args and type(args) == 'table' then
         args.vars = args.vars or {}
         args.vars.elements = args.vars.elements or {}
-        for _,v in ipairs(Icons.get_needed_icons(G.P_CENTERS[args.key])) do
-                table.insert(
-                args.vars.elements,
-                { n=G.UIT.C, config = { align="cm" }, nodes = { 
-                    { n=G.UIT.O, config= { object =
-                        SMODS.create_sprite(0, 0, 0.3, 0.3, v.atlas ~= false and v.atlas or 'ico_icons', v.pos or {x = 0, y = 0})
+        local tables = {'P_CENTERS','P_SEALS'}
+        for _,t in pairs(tables) do
+            for _,v in ipairs(Icons.get_needed_icons(G[t][args.key])) do
+                    table.insert(
+                    args.vars.elements,
+                    { n=G.UIT.C, config = { align="cm" }, nodes = { 
+                        { n=G.UIT.O, config= { object =
+                            SMODS.create_sprite(0, 0, 0.3, 0.3, v.atlas or 'ico_icons', v.pos or {x = 0, y = 0})
+                        } }
                     } }
-                } }
-            )
+                )
+            end
         end
+        
         -- temporary failsafe
         for i = 1, 20 do
             table.insert(

@@ -122,7 +122,7 @@ Icons.Icon{
     key = 'retrigger',
     atlas = 'icons',
     pos = {x = 2, y = 4},
-    targets = {"retrigger"},
+    targets = {"Retrigger", "Retriggers", "retrigger"},
 }
 Icons.Icon{
     key = 'voucher',
